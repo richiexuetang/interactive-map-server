@@ -52,7 +52,11 @@ getMarkers = async (_, res) => {
 };
 
 getMarkersByArea = async (req, res) => {
-  await Marker.find({ area: req.params.area })
+  await Marker.find(
+    { area: req.params.area },
+    { _id: 1, category: 1, coord: 1, descriptions: 1, title: 1 }
+  )
+
     .then((markers, err) => {
       if (err) {
         return res.status(400).json({ success: false, error: err });
@@ -111,5 +115,5 @@ module.exports = {
   getMarkersByArea,
   deleteMarker,
   updateMarker,
-  getMarkerById
+  getMarkerById,
 };
