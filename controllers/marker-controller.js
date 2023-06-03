@@ -54,7 +54,7 @@ getMarkers = async (_, res) => {
 getMarkersByArea = async (req, res) => {
   await Marker.find(
     { area: req.params.area },
-    { _id: 1, category: 1, coord: 1, descriptions: 1, title: 1 }
+    { _id: 1, category: 1, coord: 1, title: 1 }
   )
 
     .then((markers, err) => {
@@ -75,6 +75,20 @@ getMarkerById = async (req, res) => {
       }
 
       return res.status(200).json({ success: true, marker: marker });
+    })
+    .catch((err) => console.log(err));
+};
+
+getMarkerDetails = async (req, res) => {
+  await Marker.findOne({ _id: req.params.id })
+    .then((marker, err) => {
+      if (err) {
+        return res.status(400).json({ success: false, error: err });
+      }
+
+      const {descriptions, type} = marker;
+
+      return res.status(200).json({ success: true, details: {descriptions: descriptions, type:type} });
     })
     .catch((err) => console.log(err));
 };
@@ -116,4 +130,5 @@ module.exports = {
   deleteMarker,
   updateMarker,
   getMarkerById,
+  getMarkerDetails
 };

@@ -16,4 +16,6 @@ router.delete("/markers/:id", MarkerController.deleteMarker);
 
 router.put("/marker/:id", MarkerController.updateMarker);
 
+router.get("/marker/detail/:id", MarkerController.getMarkerDetails);
+
 module.exports = router;
