@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post("/marker", MarkerController.createMarker);
 
-router.get("/markers/:area", MarkerController.getMarkersByArea);
+router.get("/markers/:mapSlug", MarkerController.getMarkersByArea);
 
 router.get("/marker/:id", MarkerController.getMarkerById);
 
