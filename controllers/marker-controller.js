@@ -1,10 +1,10 @@
 const { trusted } = require("mongoose");
 const Marker = require("../models/marker-model");
 
-
 const getMarkersByArea = async (req, res) => {
-  console.log(req.params)
-  await Marker.find({ mapSlug: req.params.mapSlug }).sort({lat: 1})
+  console.log(req.params);
+  await Marker.find({ mapSlug: req.params.mapSlug })
+    .sort({ lat: 1 })
 
     .then((markers, err) => {
       if (err) {
@@ -17,8 +17,14 @@ const getMarkersByArea = async (req, res) => {
 };
 
 const getMarkersByAreaAndType = async (req, res) => {
-  console.log(req.params, 'type')
-  await Marker.find({ mapSlug: req.params.mapSlug, markerTypeId: req.params.markerTypeId }).sort({lat: 1})
+  console.log(req.params, "type");
+  await Marker.find({
+    $and: [
+      { mapSlug: req.params.mapSlug },
+      {markerTypeId: req.params.markerTypeId }
+    ],
+  })
+    .sort({ lat: 1 })
 
     .then((markers, err) => {
       if (err) {
@@ -32,4 +38,5 @@ const getMarkersByAreaAndType = async (req, res) => {
 
 module.exports = {
   getMarkersByArea,
+  getMarkersByAreaAndType,
 };
