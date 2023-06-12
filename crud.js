@@ -14,15 +14,14 @@ async function main() {
     // Connect to the MongoDB cluster
     await client.connect();
 
-    // Make the appropriate DB calls
-    // await createMarkers(client, data);
-    const result = await findNullLatLng(client);
-    for (var i = 0; i < result.length; i++) {
-      await client.db("ritcher-map")
+    const nulls = await findNullLatLng(client);
+    for (var i = 0; i < nulls.length; i++) {
+      await client
+        .db("ritcher-map")
         .collection("markers")
         .updateOne(
-          { _id: result[i]._id },
-          { $set: { lat: result[i].coordinate[0], lng: result[i].coordinate[1]} }
+          { _id: new ObjectId(nulls[i]._id) },
+          { $set: { lat: nulls[i].coordinate[0], lng: nulls[i].coordinate[1] } }
         );
     }
   } finally {

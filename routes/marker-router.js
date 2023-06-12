@@ -22,11 +22,12 @@ router.get("/markers/:mapSlug/:markerTypeId", async (req, res) => {
     categoryId: 1,
     markerName: 1,
     description: 1,
+    markerTypeId: 1,
   };
   if (markerTypeId == 2) {
     projection = { _id: 1, coordinate: 1, markerName: 1, zoomRange: 1 };
   } else if (markerTypeId == 3) {
-    projection = { _id: 1, categoryId: 1, coordinate: 1 };
+    projection = { _id: 1, categoryId: 1, coordinate: 1,  markerTypeId: 1 };
   } else if (markerTypeId == 4) {
     projection = { _id: 1, path: 1, parentId: 1 };
   }
