@@ -27,14 +27,16 @@ router.get("/markers/:mapSlug/:markerTypeId", async (req, res) => {
   if (markerTypeId == 2) {
     projection = { _id: 1, coordinate: 1, markerName: 1, zoomRange: 1 };
   } else if (markerTypeId == 3) {
-    projection = { _id: 1, categoryId: 1, coordinate: 1,  markerTypeId: 1 };
+    projection = { _id: 1, categoryId: 1, coordinate: 1, markerTypeId: 1 };
   } else if (markerTypeId == 4) {
     projection = { _id: 1, path: 1, parentId: 1 };
   }
 
   let collection = await db.collection("markers");
   let results = await collection
-    .find({ mapSlug: mapSlug, markerTypeId: parseInt(markerTypeId) }).project(projection)
+    .find({ mapSlug: mapSlug, markerTypeId: parseInt(markerTypeId) })
+    .project(projection)
+    .sort({ lat: -1 })
     .toArray();
 
   res.send(results).status(200);
