@@ -6,7 +6,154 @@ async function main() {
   const uri =
     "mongodb+srv://rxtang:Yiersansi@interactive-map.vvpcrjm.mongodb.net/ritcher-map?retryWrites=true&w=majority";
 
-  const data = [];
+  const data = [
+      {
+        markerTypeId: 2,
+        gameSlug: "totk",
+        categoryId: 115,
+        markerName: "Manhala Bridge",
+        coordinate: [0.6702315495, -0.7556792006],
+        lat: 0.6702315495,
+        lng: -0.7556792006,
+        zoomRange: [ 15, 17 ],
+        mapSlug: "hyrule-surface",
+      },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+    // {
+    //     markerTypeId: 4,
+    //     path: [
+    //       [, -],
+    //       [, -],
+    //     ],
+    //     parentId: "",
+    //     mapSlug: "hyrule-surface",
+    //   },
+  ];
 
   const client = new MongoClient(uri);
 
@@ -14,15 +161,8 @@ async function main() {
     // Connect to the MongoDB cluster
     await client.connect();
 
-    const nulls = await findNullLatLng(client);
-    for (var i = 0; i < nulls.length; i++) {
-      await client
-        .db("ritcher-map")
-        .collection("markers")
-        .updateOne(
-          { _id: new ObjectId(nulls[i]._id) },
-          { $set: { lat: nulls[i].coordinate[0], lng: nulls[i].coordinate[1] } }
-        );
+    for (var i = 0; i < data.length; i++) {
+      await client.db("ritcher-map").collection("markers").insertOne(data[i]);
     }
   } finally {
     // Close the connection to the MongoDB cluster
